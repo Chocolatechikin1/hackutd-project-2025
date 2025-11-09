@@ -58,3 +58,25 @@ export interface Range {
   start: Date
   end: Date
 }
+
+//for openAI
+interface AIResponseMessage {
+  role: string;
+  content: string;
+}
+
+interface AIResponseChoice {
+  message: AIResponseMessage;
+  [key: string]: any;
+}
+
+interface AzureOpenAIResponse {
+  message: AIResponseChoice[];
+  [key: string]: any;
+}
+
+//NVIDIA API
+interface NvidiaAIResponse {
+  choices: AIResponseChoice[];
+  [key: string]: any;
+}
