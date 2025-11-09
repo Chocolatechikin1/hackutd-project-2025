@@ -16,3 +16,30 @@
   --color-green-900: #0A5331;
   --color-green-950: #052E16;
 }
+
+/* Global scrolling fix for Nuxt UI Dashboard */
+@layer base {
+  /* Root structure */
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Dashboard group should be fixed height */
+  [data-ui="dashboard-group"] {
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    display: flex;
+  }
+  
+  /* Dashboard panels should scroll */
+  [data-ui="dashboard-panel"] {
+    flex: 1;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}

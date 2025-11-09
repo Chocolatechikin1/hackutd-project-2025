@@ -44,42 +44,79 @@ useSeoMeta({
 
 <!-- allow pages to grow and scroll; prevent overlays from forcing height/overflow hidden -->
 <style>
-/* Ensure root + layout components allow pages to grow and scroll */
-html, body, #__nuxt, #app, .u-app, .nuxt-layout, .nuxt, .v-application {
-  height: auto !important;
-  min-height: 100% !important;
+/* Ensure root elements are properly sized */
+html, body {
+  height: 100%;
   margin: 0;
-  overflow: auto !important;
-  -webkit-overflow-scrolling: touch;
+  padding: 0;
+  overflow: hidden !important;
 }
 
-/* ensure Nuxt root children can be full height when needed */
-#__nuxt > * {
-  min-height: 100vh;
+#__nuxt {
+  height: 100% !important;
+  overflow: hidden !important;
 }
 
-/* Undo common library/kit rules that may set full-screen and overflow hidden */
-.u-app, UApp, .nuxt-layout {
-  height: auto !important;
-  overflow: visible !important;
-  display: block !important;        /* ensure not using centered flex layout */
-  align-items: stretch !important;  /* remove vertical centering if present */
-}
-
-/* wrapper that ensures pages take full viewport and can scroll */
+/* wrapper that ensures pages take full viewport */
 .app-root {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  box-sizing: border-box;
+  height: 100% !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+/* Fix Nuxt UI Dashboard components to allow scrolling */
+:deep(.u-dashboard-group) {
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  display: flex !important;
+}
+
+/* Ensure sidebar doesn't interfere */
+:deep(.u-dashboard-sidebar) {
+  flex-shrink: 0 !important;
+  overflow-y: auto !important;
+  height: 100vh !important;
+}
+
+/* Make dashboard panels scrollable - target the panel container */
+:deep(.u-dashboard-panel),
+:deep([data-ui="dashboard-panel"]) {
+  flex: 1 !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Target the body slot specifically - this is what should scroll */
+:deep(.u-dashboard-panel [data-slot="body"]),
+:deep([data-ui="dashboard-panel"] [data-slot="body"]),
+:deep(.u-dashboard-panel) > div:not([data-slot="header"]):not([data-slot="footer"]),
+:deep([data-ui="dashboard-panel"]) > div:not([data-slot="header"]):not([data-slot="footer"]) {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  min-height: 0 !important;
+}
+
+/* Ensure nested divs don't block scrolling */
+:deep(.u-dashboard-panel) div,
+:deep([data-ui="dashboard-panel"]) div {
+  min-height: 0;
 }
 
 /* utility: allow SVG / interactive children to receive pointer events */
-.pointer-events-auto { pointer-events: auto !important; }
+.pointer-events-auto { 
+  pointer-events: auto !important; 
+}
 
 /* avoid accidental body-level clipping */
-body { overscroll-behavior: auto; }
+body { 
+  overscroll-behavior: auto; 
+}
 </style>

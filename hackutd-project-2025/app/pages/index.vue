@@ -1,10 +1,12 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center">
-    <div class="text-center space-y-2">
-      <p class="text-gray-700">Redirecting to dashboard…</p>
-      <NuxtLink to="/dashboard" class="text-blue-600 underline">Open dashboard</NuxtLink>
+  <UDashboardPanel>
+    <div class="h-screen flex items-center justify-center">
+      <div class="text-center space-y-2">
+        <p class="text-gray-700">Redirecting to dashboard…</p>
+        <NuxtLink to="/dashboard" class="text-blue-600 underline">Open dashboard</NuxtLink>
+      </div>
     </div>
-  </div>
+  </UDashboardPanel>
 </template>
 
 <script setup lang="ts">
@@ -18,7 +20,3 @@ onMounted(() => {
   router.replace('/dashboard').catch(() => { /* ignore navigation errors */ })
 })
 </script>
-
-<style scoped>
-.min-h-screen { min-height: 100vh; }
-</style>
