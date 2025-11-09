@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'inteliBudgetOrchestrator'
           slot-name: 'Production'
-          package: . # Deploy the artifact root (which is now the app subfolder)
+          package: hackutd-project-2025
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2A864BA503C141C7AD99151202CFDCED }}
