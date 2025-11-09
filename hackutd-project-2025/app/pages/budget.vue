@@ -10,4 +10,8 @@
 
 <script setup lang="ts">
 import MainBudget from '~/components/MainBudget.vue'
+
+definePageMeta({
+  middleware: 'auth'
+})
 </script>

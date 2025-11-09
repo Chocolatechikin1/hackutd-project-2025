@@ -5,29 +5,29 @@ defineProps<{
   collapsed?: boolean
 }>()
 
+const router = useRouter()
 const colorMode = useColorMode()
-const appConfig = useAppConfig()
+const { currentUser, logout } = useAuth()
 
-const colors = ['red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose']
-const neutrals = ['slate', 'gray', 'zinc', 'neutral', 'stone']
-
-const user = ref({
-  name: 'Benjamin Canac',
+const user = computed(() => ({
+  name: currentUser.value?.name || 'User',
+  email: currentUser.value?.email || '',
   avatar: {
-    src: 'https://github.com/benjamincanac.png',
-    alt: 'Benjamin Canac'
+    src: `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.value?.name || 'User')}&background=3b82f6&color=fff`,
+    alt: currentUser.value?.name || 'User'
   }
-})
+}))
+
+const handleLogout = () => {
+  logout()
+  router.push('/login')
+}
 
 const items = computed<DropdownMenuItem[][]>(() => ([[{
   type: 'label',
   label: user.value.name,
   avatar: user.value.avatar
 }], [{
-  label: 'Profile',
-  icon: 'i-lucide-user'
-}, 
-{
   label: 'Settings',
   icon: 'i-lucide-settings',
   to: '/settings'
@@ -42,7 +42,6 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
     checked: colorMode.value === 'light',
     onSelect(e: Event) {
       e.preventDefault()
-
       colorMode.preference = 'light'
     }
   }, {
@@ -59,6 +58,10 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
       e.preventDefault()
     }
   }]
+}], [{
+  label: 'Logout',
+  icon: 'i-lucide-log-out',
+  onSelect: handleLogout
 }],]))
 </script>
 

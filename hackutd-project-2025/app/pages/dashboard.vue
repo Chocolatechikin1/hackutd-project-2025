@@ -10,4 +10,8 @@
 
 <script setup lang="ts">
 import MainDashboard from '~/components/MainDashboard.vue'
+
+definePageMeta({
+  middleware: 'auth'
+})
 </script>
