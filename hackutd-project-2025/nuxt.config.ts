@@ -11,6 +11,10 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  build: {
+    transpile: ['@nuxt/ui', 'reka-ui']
+  },
+
   runtimeConfig: {
     auth0: {
       domain: process.env.NUXT_AUTH0_DOMAIN,
