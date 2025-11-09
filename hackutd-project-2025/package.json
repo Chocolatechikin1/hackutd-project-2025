@@ -11,6 +11,7 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
+    "@auth0/auth0-nuxt": "^1.0.0-beta.1",
     "@iconify-json/lucide": "^1.2.71",
     "@iconify-json/simple-icons": "^1.2.55",
     "@nuxt/ui": "^4.1.0",
