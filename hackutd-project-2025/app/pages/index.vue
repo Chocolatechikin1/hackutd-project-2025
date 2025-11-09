@@ -1,47 +1,24 @@
+<template>
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="text-center space-y-2">
+      <p class="text-gray-700">Redirecting to dashboard…</p>
+      <NuxtLink to="/dashboard" class="text-blue-600 underline">Open dashboard</NuxtLink>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { sub } from 'date-fns'
-import type { DropdownMenuItem } from '@nuxt/ui'
-import type { Period, Range } from '~/types'
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
-const { isNotificationsSlideoverOpen } = useDashboard()
+const router = useRouter()
 
-const items = [[]] satisfies DropdownMenuItem[][]
-
-const range = shallowRef<Range>({
-  start: sub(new Date(), { days: 14 }),
-  end: new Date()
+onMounted(() => {
+  // Use replace so back button doesn't return to index
+  router.replace('/dashboard').catch(() => { /* ignore navigation errors */ })
 })
-const period = ref<Period>('daily')
 </script>
 
-<template>
-  <UDashboardPanel id="home">
-    <template #header>
-      <UDashboardNavbar title="Home" :ui="{ right: 'gap-3' }">
-        <template #leading>
-          <UDashboardSidebarCollapse />
-        </template>
-
-        <template #right>
-        
-
-        </template>
-      </UDashboardNavbar>
-
-      <UDashboardToolbar>
-        <template #left>
-          <!-- NOTE: The `-ms-1` class is used to align with the `DashboardSidebarCollapse` button here. -->
-          <HomeDateRangePicker v-model="range" class="-ms-1" />
-
-          <HomePeriodSelect v-model="period" :range="range" />
-        </template>
-      </UDashboardToolbar>
-    </template>
-
-    <template #body>
-      <HomeStats :period="period" :range="range" />
-      <HomeChart :period="period" :range="range" />
-      <HomeSales :period="period" :range="range" />
-    </template>
-  </UDashboardPanel>
-</template>
+<style scoped>
+.min-h-screen { min-height: 100vh; }
+</style>

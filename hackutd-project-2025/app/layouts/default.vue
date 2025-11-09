@@ -7,9 +7,17 @@ const toast = useToast()
 const open = ref(false)
 
 const links = [[{
-  label: 'Home',
+  label: 'Dashboard',
   icon: 'i-lucide-house',
-  to: '/',
+  to: '/dashboard',
+  onSelect: () => {
+    open.value = false
+  }
+}, 
+{
+  label: 'Budget',
+  icon: 'i-lucide-chart-pie',
+  to: '/budget',
   onSelect: () => {
     open.value = false
   }
