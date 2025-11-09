@@ -128,7 +128,5 @@ onMounted(async () => {
     <UDashboardSearch :groups="groups" />
 
     <slot />
-
- 
   </UDashboardGroup>
 </template>
