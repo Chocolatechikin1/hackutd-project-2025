@@ -80,3 +80,20 @@ interface NvidiaAIResponse {
   choices: AIResponseChoice[];
   [key: string]: any;
 }
+
+interface AskApiSuccessResponse {
+  reply: string;
+  reasoning: string;
+  sessionId: string;
+  error?: undefined;
+}
+
+interface AskApiErrorResponse {
+  error: string;
+  reply?: undefined;
+  reasoning?: undefined;
+  sessionId?: undefined;
+}
+
+//type used in $fetch
+type AskApiResponse = AskApiSuccessResponse | AskApiErrorResponse;
