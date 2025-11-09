@@ -25,3 +25,8 @@ logs
 
 # VSC
 .history
+
+#protect keys
+local.settings.json
+dist/
+node_modules/
