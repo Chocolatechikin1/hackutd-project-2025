@@ -1,10 +1,9 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { defineEventHandler, readBody } from 'h3';
 import fetch from "node-fetch";
 
-// Azure Function handler
-const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+export default defineEventHandler(async (event) => {
   try {
-    const body = req.body || {};
+    const body = await readBody(event);
     const message = body.message || "No message provided.";
 
     const endpoint = process.env.AZURE_ENDPOINT;
@@ -14,7 +13,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const nvidiaKey = process.env.NVIDIA_API_KEY;
     const nvidiaEndpoint = "https://integrate.api.nvidia.com/v1";
 
-    // 🧠 Step 1: Ask Azure OpenAI for reasoning/plan
+    // Step 1: Ask Azure OpenAI for reasoning/plan
     const azureResponse = await fetch(
       `${endpoint}openai/deployments/${deployment}/chat/completions?api-version=2025-01-01-preview`,
       {
@@ -36,10 +35,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
       }
     );
 
-    const azureData = await azureResponse.json();
+    const azureData: any = await azureResponse.json();
     const plan = azureData?.choices?.[0]?.message?.content || "No plan generated.";
 
-    // 🧩 Step 2: Send plan to NVIDIA Nemotron for creative expansion
+    // Step 2: Send plan to NVIDIA Nemotron for creative expansion
     const nvidiaResponse = await fetch(`${nvidiaEndpoint}/chat/completions`, {
       method: "POST",
       headers: {
@@ -60,22 +59,18 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
       }),
     });
 
-    const nvidiaData = await nvidiaResponse.json();
+    const nvidiaData: any = await nvidiaResponse.json();
     const finalOutput = nvidiaData?.choices?.[0]?.message?.content || "No output generated.";
 
-    // ✅ Return response
-    context.res = {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-      body: { reasoning: plan, reply: finalOutput },
-    };
+    // Return response
+    return { reasoning: plan, reply: finalOutput };
+
   } catch (err: any) {
     console.error("Error:", err);
-    context.res = {
-      status: 500,
-      body: { error: "Failed to connect to Azure or NVIDIA API." },
-    };
+    // Use createError for proper error handling in Nuxt/h3
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Failed to connect to Azure or NVIDIA API.",
+    });
   }
-};
-
-export default httpTrigger;
+});

@@ -1,3 +1,10 @@
+export interface UserData {
+  name: string;
+  income: number;
+  expenses: number[];
+  savings: number;
+}
+
 export interface Transaction {
   amount: number;
   category: string;

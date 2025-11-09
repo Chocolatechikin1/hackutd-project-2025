@@ -1,10 +1,10 @@
 import { defineEventHandler } from 'h3';
 import OpenAI from 'openai';
-import type { OrchestratorResponse, AccountSummary, BudgetPrediction } from '../types';
+import type { OrchestratorResponse, AccountSummary, BudgetPrediction } from '../types/index.d.ts';
 
 const azureClient = new OpenAI({
-  apiKey: process.env.AZURE_OPENAI_KEY!,
-  baseURL: `${process.env.AZURE_OPENAI_ENDPOINT}/openai/deployments/o3`,
+  apiKey: process.env.AZURE_API_KEY!,
+  baseURL: `${process.env.AZURE_ENDPOINT}openai/deployments/${process.env.AZURE_DEPLOYMENT}`,
 });
 
 export default defineEventHandler(async () => {
