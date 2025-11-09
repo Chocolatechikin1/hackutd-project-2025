@@ -1,5 +1,7 @@
 export default defineEventHandler(async (event) => {
-  const apiKey = process.env.NESSIE_API_KEY; 
+  const config = useRuntimeConfig(event);
+  
+  const apiKey = config.nessieApiKey; 
   const baseUrl = 'https://api.nessieisreal.com';
     const endpoint = `/customer`;
   
@@ -8,9 +10,8 @@ export default defineEventHandler(async (event) => {
   try {
 
     const customers = await $fetch(requestUrl);
-
     return customers;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching customers from Nessie API:', error);
     return {
       error: 'Failed to fetch customer data',

@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true
   },
-    runtimeConfig: {
+
+  runtimeConfig: {
     auth0: {
       domain: process.env.NUXT_AUTH0_DOMAIN,
       clientId: process.env.NUXT_AUTH0_CLIENT_ID,
@@ -18,6 +19,16 @@ export default defineNuxtConfig({
       sessionSecret: process.env.NUXT_AUTH0_SESSION_SECRET,
       appBaseUrl: process.env.NUXT_AUTH0_APP_BASE_URL,
     },
+    azureEndpoint: process.env.AZURE_ENDPOINT,
+    azureApiKey: process.env.AZURE_API_KEY,
+    azureDeployment: process.env.AZURE_DEPLOYMENT,
+
+    nvidiaApiKey: process.env.NVIDIA_API_KEY,
+
+    nessieApiKey: process.env.NESSIE_API_KEY,
+
+    azureStorageAccountName: process.env.AZURE_STORAGE_ACCOUNT_NAME,
+    azureStorageAccountKey: process.env.AZURE_STORAGE_ACCOUNT_KEY,
   },
 
   css: ['~/assets/css/main.css'],
