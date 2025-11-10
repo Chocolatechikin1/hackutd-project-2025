@@ -7,6 +7,10 @@ export default defineNuxtConfig({
     '@auth0/auth0-nuxt',
   ],
 
+  nitro: {
+    preset: 'azure'
+  },
+
   devtools: {
     enabled: true
   },
