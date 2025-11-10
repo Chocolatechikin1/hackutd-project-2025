@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'inteliBudgetOrchestrator'
           slot-name: 'Production'
-          package: hutd-2025
+          package: ./node-app #instead of hard coding the directory name, make it point to the downloaded folder that is uploaded from the build job
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2A864BA503C141C7AD99151202CFDCED }}
